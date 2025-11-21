@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Événements du Jour{% endblock %}
+
+{% block content %}
+<div class="container mb-3">
+    <h2 class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Événements pour le {{ date }}</h2>
+    <ul class="list-group">
+        {% for event in object_list %}
+            <li class="list-group-item">
+                <span class="text-white">{{ event.title }}</span> - <span class="text-white">{{ event.description }}</span>
+            </li>
+        {% empty %}
+            <li class="text-white">Aucun événement trouvé pour ce jour.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'calendar_view' %}" class="btn btn-secondary mt-3">Retour au calendrier</a>
+</div>
+{% endblock %}

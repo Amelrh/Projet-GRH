@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Détails de l'Évaluation{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Détails de l'Évaluation</h2>
+
+<p><strong>Employé:</strong> {{ evaluation.employe.nom }} {{ evaluation.employe.prenom }}</p>
+<p><strong>Date d'Évaluation:</strong> {{ evaluation.date_evaluation }}</p>
+<p><strong>Objectifs Atteints:</strong> {{ evaluation.objectifs_atteints }}</p>
+<p><strong>Compétences Développées:</strong> {{ evaluation.competences_developpees }}</p>
+<p><strong>Note:</strong> {{ evaluation.note }}</p>
+
+<a href="{% url 'evaluation_update' evaluation.pk %}" class="btn btn-warning">Modifier</a>
+<a href="{% url 'evaluation_delete' evaluation.pk %}" class="btn btn-danger">Supprimer</a>
+<a href="{% url 'evaluation_list' %}" class="btn btn-secondary">Retour à la Liste des Évaluations</a>
+
+{% endblock %}

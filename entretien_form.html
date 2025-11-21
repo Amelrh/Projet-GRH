@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un Entretien{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Ajouter un Entretien</h2>
+
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="{{ form.candidature.id_for_label }}" class="form-label">Candidature:</label>
+        {{ form.candidature }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date_entretien.id_for_label }}" class="form-label">Date de l'entretien:</label>
+        {{ form.date_entretien}}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.heure_entretien.id_for_label }}" class="form-label">Heure de l'entretien:</label>
+        {{ form.heure_entretien}}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.lieu.id_for_label }}" class="form-label">Lieu de l'entretien:</label>
+        {{ form.lieu}}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.commentaires.id_for_label }}" class="form-label">Commentaires:</label>
+        {{ form.commentaires}}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a href="{% url 'entretien_list' %}" class="btn btn-secondary">Annuler</a>
+    <button type="button" class="btn btn-info" onclick="sendToCandidature()">Envoyer à la Candidature</button>
+</form>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<script>
+    function sendToCandidature() {
+        alert("L'entretien a été envoyé à la candidature !");
+    }
+</script>
+{% endblock %}

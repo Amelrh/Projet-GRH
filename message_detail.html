@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Détails du Message{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{{ message.subject }}</h2>
+
+<div class="mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <p><strong>De :</strong> {{ message.sender.username }}</p>
+    <p><strong>À :</strong> {{ message.recipient.username }}</p>
+    <p><strong>Date d'envoi :</strong> {{ message.date_sent }}</p>
+    <p><strong>Contenu :</strong></p>
+    <p>{{ message.content }}</p>
+</div>
+
+<a href="{% url 'inbox' %}" class="btn btn-secondary">Retour à la Boîte de Réception</a>
+
+{% endblock %}

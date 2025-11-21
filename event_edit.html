@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Éditer l'Événement{% endblock %}
+
+{% block content %}
+<div class="container mb-3">
+    <h2 class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Éditer l'Événement : {{ event.title }}</h2>
+    
+    <form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="id_title" class="form-label text-white">Titre</label>
+            {{ form.title }}  
+            {% if form.title.errors %}
+                <div class="text-danger">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_date" class="form-label text-white">Date</label>
+            {{ form.date }}  <!-- Utilisez simplement {{ form.date }} -->
+            {% if form.date.errors %}
+                <div class="text-danger">{{ form.date.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="mb-3">
+            <label for="id_description" class="form-label text-white">Description</label>
+            {{ form.description }}  
+            {% if form.description.errors %}
+                <div class="text-danger">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    </form>
+    
+    <a href="{% url 'event_list' %}" class="btn btn-secondary mt-3">Retour à la liste des événements</a>
+</div>
+{% endblock %}

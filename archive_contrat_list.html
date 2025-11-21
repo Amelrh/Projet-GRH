@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Archives de Contrats{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200" class="text-center">Liste des Archives de Contrats</h2>
+
+<table class="table"data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200" class="text-center">
+    <thead>
+        <tr>
+            <th>Contrat</th>
+            <th>Date d'Archivage</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for archive in archives %}
+        <tr>
+            <td>{{ archive.contrat }}</td>
+            <td>{{ archive.date_archivage }}</td>
+            <td>
+                <div class="d-flex flex-column">
+                    <a href="{% url 'archive_contrat_detail' archive.pk %}" class="btn btn-primary mb-2">Détails</a>
+                    <form action="{% url 'archive_contrat_delete' archive.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Aucune archive de contrat trouvée.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'contrat_list' %}" class="btn btn-secondary">Retour à la Liste des Contrats</a>
+{% endblock %}

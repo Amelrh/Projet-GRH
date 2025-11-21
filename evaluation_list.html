@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Évaluations{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Évaluations</h2>
+
+<a href="{% url 'evaluation_create' %}" class="btn btn-primary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Ajouter une Évaluation</a>
+
+<table class="table table-striped" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+    <thead>
+        <tr>
+            <th style="color: white;">Employé</th>
+            <th style="color: white;">Date d'Évaluation</th>
+            <th style="color: white;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if evaluations %}
+            {% for evaluation in evaluations %}
+            <tr>
+                <td style="color: white;">{{ evaluation.employe.nom }} {{ evaluation.employe.prenom }}</td>
+                <td style="color: white;">{{ evaluation.date_evaluation }}</td>
+                <td>
+                    <a href="{% url 'evaluation_detail' evaluation.pk %}" class="btn btn-info">Détails</a>
+                    <a href="{% url 'evaluation_update' evaluation.pk %}" class="btn btn-warning">Modifier</a>
+                    <form action="{% url 'evaluation_delete' evaluation.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="3" style="color: white;">Aucune évaluation trouvée.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}

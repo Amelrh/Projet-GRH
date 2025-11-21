@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tableau de Bord{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4 animated-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Tableau de Bord</h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Employés</div>
+                <div class="card-body">
+                    <h5 class="card-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{{ employe_count }} Employés</h5>
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Gérez vos employés ici.</p>
+                    <a href="{% url 'employe_list' %}" class="btn btn-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Voir les Employés</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Congés</div>
+                <div class="card-body">
+                    <h5 class="card-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{{ conge_count }} Congés Demandés</h5>
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Gérez les demandes de congé ici.</p>
+                    <a href="{% url 'conge_list' %}" class="btn btn-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Voir les Congés</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Contrats</div>
+                <div class="card-body">
+                    <h5 class="card-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{{ contrat_count }} Contrats Actifs</h5>
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Gérez les contrats ici.</p>
+                    <a href="{% url 'contrat_list' %}" class="btn btn-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Voir les Contrats</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Salaires</div>
+                <div class="card-body">
+                    <h5 class="card-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{{ salaire_count }} Salaires Enregistrés</h5>
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Gérez les salaires ici.</p>
+                    <a href="{% url 'salaire_list' %}" class="btn btn-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Voir les Salaires</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Recrutements</div>
+                <div class="card-body">
+                    <h5 class="card-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{{ recrutement_count }} Recrutements en Cours</h5>
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Gérez les recrutements ici.</p>
+                    <a href="{% url 'recrutement_list' %}" class="btn btn-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Voir les Recrutements</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Évaluations</div>
+                <div class="card-body">
+                    <h5 class="card-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{{ evaluation_count }} Évaluations Réalisées</h5>
+                    <p class="card-text" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Gérez les évaluations ici.</p>
+                    <a href="{% url 'evaluation_list' %}" class="btn btn-light" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Voir les Évaluations</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-white bg-danger mb-3"> 
+            <div class="card" style="background-color: #457b9d; color: white;">
+                <div class="card-header" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Données Manquantes</div>
+                <div class="card-body">
+                    <h5 class="card-title">Vérifiez ces éléments</h5>
+                    <ul class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                        {% for missing in missing_data %}
+                            <li>{{ missing }}</li>
+                        {% empty %}
+                            <li>Aucune donnée manquante.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Effectifs Totaux</h3> 
+            <ul class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"> 
+                {% for contrat in effectifs_par_contrat %}
+                    <li>{{ contrat.type_contrat }}: {{ contrat.count }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Statistiques de Diversité</h3> 
+            <h4 class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Répartition par Sexe</h4>
+            <ul class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"> 
+                {% for sexe in sexe_distribution %}
+                    <li>{{ sexe.sexe }}: {{ sexe.count }}</li>
+                {% endfor %}
+            </ul>
+            <h4 class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Répartition par Âge</h4> 
+            <ul class="text-white" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <li>Moins de 30 ans: {{ age_distribution.moins_de_30 }}</li>
+                <li>Entre 30 et 50 ans: {{ age_distribution.entre_30_et_50 }}</li>
+                <li>Plus de 50 ans: {{ age_distribution.plus_de_50 }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Top Performeurs</h3>
+            <ul data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                {% for performeur in top_performeurs %}
+                    <li>{{ performeur.nom }}: {{ performeur.score }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Graphique des Pics d'Absences</h3>
+            <script id="absence-dates" type="application/json">
+                {{ absence_data.dates|json_script:"absence_dates" }}
+            </script>
+            <script id="absence-counts" type="application/json">
+                {{ absence_data.counts|json_script:"absence_counts" }}
+            </script>
+            <canvas id="absence-chart"></canvas>
+            <script>
+                var absenceData = {
+                    dates: JSON.parse(document.getElementById('absence-dates').textContent),
+                    counts: JSON.parse(document.getElementById('absence-counts').textContent)
+                };
+                var ctx = document.getElementById('absence-chart').getContext('2d');
+                var absenceChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: absenceData.dates,
+                        datasets: [{
+                            label: 'Nombre d\'Absences',
+                            data: absenceData.counts,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderWidth: 2,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Graphique des Absences (Image)</h3>
+            <img src="data:image/png;base64,{{ graphic }}" alt="Graphique des Absences" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Taux d'Évolution des Recrutements</h3>
+            <table class="table" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <thead>
+                    <tr>
+                        <th>Mois</th>
+                        <th>Taux d'Évolution (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recrutement in taux_recrutement %}
+                        <tr>
+                            <td>{{ recrutement.month }}</td>
+                            <td>{{ recrutement.evolution|floatformat:2 }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+{% endblock %}

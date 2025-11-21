@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un Congé{% endblock %}
+
+{% block content %}
+<h2>Ajouter un Congé</h2>
+<form id="conge-form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Soumettre</button>
+</form>
+<a href="{% url 'conge_list' %}" class="btn btn-secondary">Retour à la liste des congés</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#conge-form').on('submit', function(event) {
+            event.preventDefault();  
+            $.ajax({
+                url: "{% url 'ajax_create_conge' %}",
+                method: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        alert('Congé ajouté avec succès !');
+                        window.location.href = "{% url 'conge_list' %}";
+                    } else {
+                        alert('Erreur: ' + response.errors);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur:', error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

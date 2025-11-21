@@ -1,0 +1,46 @@
+m{% extends 'base.html' %}
+
+{% block title %}Boîte de Réception{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Boîte de Réception</h2>
+
+<div class="mb-3">
+    <table class="table text-center">
+        <thead>
+            <tr>
+                <th>Sujet</th>
+                <th>Expéditeur</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for message in messages %}
+            <tr>
+                <td>{{ message.subject }}</td>
+                <td>{{ message.sender.username }}</td>
+                <td>{{ message.timestamp|date:"d/m/Y H:i" }}</td>
+                <td>
+                    <div class="d-flex flex-column">
+                        <a href="{% url 'view_message' message.id %}" class="btn btn-info mb-2 btn-block">Voir</a>
+                        <div class="w-100 text-center">
+                            <form action="{% url 'delete_message' message.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Aucun message reçu.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'send_message' %}" class="btn btn-secondary">Envoyer un Nouveau Message</a>
+{% endblock %}

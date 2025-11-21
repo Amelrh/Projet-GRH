@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Rapport d'Évaluation{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Rapport d'Évaluation</h2>
+
+<p><strong>Employé:</strong> {{ evaluation.employe.user.username }}</p>
+<p><strong>Date d'Évaluation:</strong> {{ evaluation.date_evaluation }}</p>
+<p><strong>Commentaires:</strong> {{ evaluation.commentaires }}</p>
+
+<a href="{% url 'evaluation_list' %}" class="btn btn-secondary">Retour à la Liste des Évaluations</a>
+
+{% endblock %}

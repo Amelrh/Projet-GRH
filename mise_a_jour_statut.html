@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Mettre à Jour le Statut{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Mettre à Jour le Statut de la Candidature</h2>
+
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="statut">Statut</label>
+        <select name="statut" class="form-control" required>
+            <option value="En attente">En attente</option>
+            <option value="Accepté">Accepté</option>
+            <option value="Rejeté">Rejeté</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Mettre à Jour</button>
+</form>
+
+<a href="{% url 'candidature_list' %}" class="btn btn-secondary">Retour à la liste des candidatures</a>
+
+{% if messages %}
+    <ul class=" messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

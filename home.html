@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="welcome-card shadow-sm p-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 class="text">Bienvenue dans notre solution de gestion des ressources humaines.</h1>
+                <p>Simplifiez la gestion, élevez votre organisation !</p>
+            </div>
+            <div class="col-md-6 text-center">
+                <video width="100%" height="auto" controls autoplay loop muted>
+                    <source src="{% static 'videos/home.WEBM' %}" type="video/webm">
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mb-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <hr style="border: none; height: 4px; background: linear-gradient(to right, #90e0ef, #35afc7); width: 80%; margin: 20px auto; border-radius: 5px;">
+    <h3 class="feature-title">Fonctionnalités</h3>
+    <hr style="border: none; height: 4px; background: linear-gradient(to right, #90e0ef, #35afc7); width: 80%; margin: 20px auto; border-radius: 5px;">
+</div>
+
+<div class="row">
+    {% if user.is_authenticated %}
+    {% if can_view_favoris %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'favoris_list' %}"><i class="fas fa-star"></i></a>
+                    <p>Favoris</p>
+                </div>
+            </div>
+        {% endif %}
+        {% if can_view_calendar %}
+        <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <div class="star">
+                <a href="{% url 'calendar_view' %}"><i class="fas fa-calendar-alt"></i></a>
+                <p>Calendrier</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if can_view_liste_absences %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'liste_absences' %}"><i class="fas fa-calendar-times"></i></a>
+                    <p> Absences</p>
+                </div>
+            </div>
+        {% endif %}
+        {% if can_view_liste_retards %}
+        <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <div class="star">
+                <a href="{% url 'liste_retards' %}"><i class="fas fa-clock"></i></a>
+                <p>Retards</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if can_view_employe %}
+        <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <div class="star">
+                <a href="{% url 'employe_list' %}"><i class="fas fa-users"></i></a>
+                <p>Gestion des Employés</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if can_view_conge %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'conge_list' %}"><i class="fas fa-plane"></i></a>
+                    <p>Congés</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_type_conge %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'type_conge_list' %}"><i class="fas fa-calendar-alt"></i></a>
+                    <p>Type de Congé</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if can_view_solde_conge %}
+        <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <div class="star">
+                <a href="{% url 'solde_conge_list' %}"><i class="fas fa-calendar-check"></i></a>
+                <p>Soldes de Congé</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if can_view_contrat %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'contrat_list' %}"><i class="fas fa-file-contract"></i></a>
+                    <p>Contrats</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_archive_contrat %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'archive_contrat_list' %}"><i class="fas fa-archive"></i></a>
+                    <p>Archive de Contrats</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_salaire %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'salaire_list' %}"><i class="fas fa-dollar-sign"></i></a>
+                    <p>Salaires</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_recrutement %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'recrutement_list' %}"><i class="fas fa-user-check"></i></a>
+                    <p>Recrutement</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_evaluation %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'evaluation_list' %}"><i class="fas fa-star"></i></a>
+                    <p>Évaluations</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_fiche_paie %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'fiche_paie_list' %}"><i class="fas fa-file-invoice-dollar"></i></a>
+                    <p>Fiches de Paie</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_prime %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'prime_list' %}"><i class="fas fa-gift"></i></a>
+                    <p>Primes</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_fiche_employe %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'fiche_employe_list' %}"><i class="fas fa-file-alt"></i></a>
+                    <p>Fiches Employés</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_service %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'service_list' %}"><i class="fas fa-cogs"></i></a>
+                    <p>Services</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if can_view_type_contrat %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'type_contrat_list' %}"><i class="fas fa-file-contract"></i></a>
+                    <p>Types de Contrat</p>
+                </div>
+            </div>
+        {% endif %}
+        {% if can_view_entretien_list %}
+        <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <div class="star">
+                <a href="{% url 'entretien_list' %}"><i class="fas fa-comments"></i></a>
+                <p>Liste des Entretiens</p>
+            </div>
+        </div>
+        {% endif %}
+        {% if can_view_candidats %}
+            <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                <div class="star">
+                    <a href="{% url 'candidats_list' %}"><i class="fas fa-user-friends"></i></a>
+                    <p>Liste des Candidats</p>
+                </div>
+            </div>
+        {% endif %}
+        {% if can_view_inbox %}
+        <div class="col-md-4 text-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <div class="star">
+                <a href="{% url 'inbox' %}"><i class="fas fa-inbox"></i></a>
+                <p>Boîte de Réception</p>
+            </div>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="col-md-12 text -center">
+            <p class="text-danger">Veuillez vous connecter pour voir les fonctionnalités.</p>
+        </div>
+    {% endif %}
+</div>
+
+<div class="text-center mt-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <a href="{% url 'legal_mentions' %}" class="text-italic-white"><i class="fas fa-gavel"></i> Mentions légales</a> | 
+    <a href="{% url 'contact' %}" class="text-italic-white"><i class="fas fa-envelope"></i> Contact</a>
+</div>
+{% endblock %}

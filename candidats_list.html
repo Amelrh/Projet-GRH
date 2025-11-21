@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Liste des Candidatures{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200" class="text-center">Liste des Candidatures</h1>
+
+    {% if messages %}
+        <div class="alert alert-info">
+            <ul class="list-unstyled">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <table class="table" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        <thead>
+            <tr>
+                <th>Candidat</th> 
+                <th>Email</th> 
+                <th>Offre d'emploi</th>
+                <th>Date de candidature</th>
+                <th>Statut</th>
+                <th>CV</th> 
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidature in candidatures %}
+                <tr>
+                    <td>{{ candidature.nom }} {{ candidature.prenom }}</td> 
+                    <td>{{ candidature.email }}</td>
+                    <td>{{ candidature.offre.titre }}</td>
+                    <td>{{ candidature.date_candidature }}</td>
+                    <td>{{ candidature.statut }}</td>
+                    <td>
+                        <a href="{{ candidature.cv.url }}" class="btn btn-primary" target="_blank">Télécharger CV</a> 
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column">
+                            <a href="{% url 'changer_statut_candidature' candidature.pk %}" class="btn btn-info mb-2 btn-block">Changer Statut</a>
+                            <a href="{% url 'entretien_create' candidature.pk %}" class="btn btn-success mb-2 btn-block">Ajouter Entretien</a>
+                            <form action="{% url 'candidature_delete' candidature.pk %}" method="post" style="display:inline;"> 
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette candidature ?');">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucune candidature trouvée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="{% url 'liste_cvs' %}" class="btn btn-secondary">Voir la Liste des CV</a>
+    </div>
+</div>
+{% endblock %}

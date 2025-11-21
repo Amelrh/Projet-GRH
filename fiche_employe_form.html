@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Formulaire de Fiche d'Employé{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Formulaire de Fiche d'Employé</h2>
+
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="{{ form.employe.id_for_label }}" class="form-label">{{ form.employe.label }}</label>
+        {{ form.employe }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.competences.id_for_label }}" class="form-label">{{ form.competences.label }}</label>
+        {{ form.competences }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.formations.id_for_label }}" class="form-label">{{ form.formations.label }}</label>
+        {{ form.formations }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.historique_professionnel.id_for_label }}" class="form-label">{{ form.historique_professionnel.label }}</label>
+        {{ form.historique_professionnel }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a href="{% url 'fiche_employe_list' %}" class="btn btn-secondary">Annuler</a>
+</form>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

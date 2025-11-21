@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block title %}Liste des Recrutements{% endblock %}
+
+{% block content %}
+<h2 class="animated-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Recrutements</h2>
+>
+<a href="{% url 'recrutement_create' %}" class="btn btn-primary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Ajouter un Recrutement</a>
+
+<table class="table" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Date de Recrutement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="recrutement-list">
+        {% for recrutement in recrutements %}
+        <tr data-id="{{ recrutement.id }}">
+            <td>{{ recrutement.titre }}</td>
+            <td>{{ recrutement.description }}</td>
+            <td>{{ recrutement.date_recrutement }}</td>
+            <td>
+                <a href="{% url 'recrutement_update' recrutement.id %}" class="btn btn-warning">Modifier</a>
+                <form action="{% url 'recrutement_delete' recrutement.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Aucun recrutement disponible.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

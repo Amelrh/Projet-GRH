@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Employés{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Employés</h2>
+
+
+<div class="mb-3"data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <a href="{% url 'employe_create' %}" class="btn btn-primary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Ajouter un Employé</a>
+</div>
+
+<div class="mb-3">
+    <table class="table" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="employe-table-body">
+            {% if employes %}
+                {% for employe in employes %}
+                <tr id="employe-{{ employe.id }}">
+                    <td>{{ employe.code }}</td>
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.prenom }}</td>
+                    <td>
+                        <div class="mb-3">
+                            <form action="{% url 'employe_update' employe.pk %}" method="get" style="display:inline;">
+                                <button type="submit" class="btn btn-warning">Modifier</button>
+                            </form>
+                            <form action="{% url 'employe_delete' employe.pk %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun employé disponible.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Absences{% endblock %}
+
+{% block content %}
+<h2 class="container mt-5" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Liste des Absences</h2>
+
+
+<div class="mb-3"class="container mt-5" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    <a href="{% url 'marquer_absence' %}" class="btn btn-primary">Marquer une Absence</a>
+</div>
+
+<table class="table"class="container mt-5" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    <thead>
+        <tr>
+            <th>Employé</th>
+            <th>Date d'Absence</th>
+            <th>Justification</th>
+            <th>Justificatif</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for absence in absences %}
+        <tr>
+            <td>{{ absence.employe.nom }}</td>
+            <td>{{ absence.date_absence }}</td>
+            <td>{{ absence.justification }}</td>
+            <td>
+                {% if absence.justificatif %}
+                    <a href="{{ absence.justificatif.url }}" target="_blank">Voir le justificatif</a>
+                {% else %}
+                    Aucun justificatif
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Aucune absence trouvée.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Retour au Tableau de Bord</a>
+{% endblock %}

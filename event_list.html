@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Événements{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Événements</h2>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.title }}</td>
+                <td>{{ event.date }}</td>
+                <td>{{ event.description }}</td>
+                <td>
+                    <a href="{% url 'event_edit' event.id %}" class="btn btn-warning">Éditer</a>
+                    <a href="{% url 'event_delete' event.id %}" class="btn btn-danger">Supprimer</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Aucun événement trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'event_add' %}" class="btn btn-primary">Ajouter un Événement</a>
+    <a href="{% url 'calendar_view' %}" class="btn btn-secondary ">Retour au Calendrier</a>  
+</div>
+{% endblock %}

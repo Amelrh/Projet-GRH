@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Formulaire de Salaire{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Formulaire de Salaire</h2>
+
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="{{ form.employe.id_for_label }}" class="form-label">{{ form.employe.label }}</label>
+        {{ form.employe }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date_paiement.id_for_label }}" class="form-label">{{ form.date_paiement.label }}</label>
+        {{ form.date_paiement }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.salaire_base.id_for_label }}" class="form-label">{{ form.salaire_base.label }}</label>
+        {{ form.salaire_base }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.heures_supplementaires.id_for_label }}" class="form-label">{{ form.heures_supplementaires.label }}</label>
+        {{ form.heures_supplementaires }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.primes.id_for_label }}" class="form-label">{{ form.primes.label }}</label>
+        {{ form.primes }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+</form>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

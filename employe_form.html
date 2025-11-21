@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Modifier{% else %}Créer{% endif %} un Employé{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{% if form.instance.pk %}Modifier{% else %}Créer{% endif %} un Employé</h2>
+
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="{{ form.nom.id_for_label }}" class="form-label">Nom:</label>
+        {{ form.nom }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.prenom.id_for_label }}" class="form-label">Prénom:</label>
+        {{ form.prenom }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.sexe.id_for_label }}" class="form-label">Sexe:</label>
+        {{ form.sexe }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date_naissance.id_for_label }}" class="form-label">Date de naissance:</label>
+        {{ form.date_naissance }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.adresse.id_for_label }}" class="form-label">Adresse:</label>
+        {{ form.adresse }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date_embauche.id_for_label }}" class="form-label">Date d'embauche:</label>
+        {{ form.date_embauche }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.service.id_for_label }}" class="form-label">Service:</label>
+        {{ form.service }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.salaire_base.id_for_label }}" class="form-label">Salaire de base:</label>
+        {{ form.salaire_base }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.type_contrat.id_for_label }}" class="form-label">Type de contrat:</label>
+        {{ form.type_contrat }}
+    </div>
+
+    <button type="submit" class="btn btn-success" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{% if form.instance.pk %}Modifier{% else %}Créer{% endif %}</button>
+    <a href="{% url 'employe_list' %}" class="btn btn-secondary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Annuler</a>
+</form>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Salaires{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Salaires</h2>
+
+<div class="mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <a href="{% url 'salaire_create' %}" class="btn btn-primary">Ajouter un Salaire</a>
+</div>
+
+<table class="table" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <thead>
+        <tr>
+            <th>Employé</th>
+            <th>Montant</th>
+            <th>Date de Paiement</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="salaire-table-body">
+        {% if salaires %}
+            {% for salaire in salaires %}
+            <tr id="salaire-{{ salaire.id }}">
+                <td>{{ salaire.employe.code }}</td>
+                <td>{{ salaire.salaire_final }}</td>
+                <td>{{ salaire.date_paiement }}</td>
+                <td>
+                    <form action="{% url 'salaire_update' salaire.id %}" method="get" style="display:inline;">
+                        <button type="submit" class="btn btn-warning">Modifier</button>
+                    </form>
+                    <form action="{% url 'salaire_delete' salaire.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun salaire disponible.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends  'base.html' %}
+
+{% block title %}Détails de la Fiche de Paie{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Détails de la Fiche de Paie</h2>
+
+<p><strong>Employé:</strong> {{ fiche.employe.user.username }}</p>
+<p><strong>Date de Paiement:</strong> {{ fiche.date_paiement }}</p>
+<p><strong>Salaire de Base:</strong> {{ fiche.salaire_base }}</p>
+<p><strong>Salaire Final:</strong> {{ fiche.salaire_final }}</p>
+<p><strong>Date de Création:</strong> {{ fiche.date_creation }}</p>
+
+<a href="{% url 'fiche_paie_list' %}" class="btn btn-secondary">Retour à la Liste des Fiches de Paie</a>
+
+{% endblock %}

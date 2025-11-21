@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Demande de Congé{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Demande de Congé</h2>
+<form id="demande-conge-form" method="POST" action="{% url 'ajax_demander_conge' %}" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"> 
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Soumettre la demande</button>
+    <a href="{% url 'conge_list' %}" class="btn btn-secondary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Annuler</a>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#demande-conge-form').on('submit', function(event) {
+            event.preventDefault();  
+
+            $.ajax({
+                url: $(this).attr('action'),  
+                method: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        alert('Votre demande de congé a été soumise avec succès !');
+                        window.location.href = "{% url 'conge_list' %}";  // Rediriger vers la liste des congés
+                    } else {
+                        alert('Erreur: ' + JSON.stringify(response.errors));
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur:', error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

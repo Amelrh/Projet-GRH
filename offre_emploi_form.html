@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ form.instance.pk|yesno:"Modifier,Ajouter" }} une Offre d'Emploi{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{{ form.instance.pk|yesno:"Modifier,Ajouter" }} une Offre d'Emploi</h2>
+
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="{{ form.titre.id_for_label }}" class="form-label">{{ form.titre.label }}</label>
+        {{ form.titre }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+        {{ form.description }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date_expiration.id_for_label }}" class="form-label">{{ form.date_expiration.label }}</label>
+        {{ form.date_expiration }}
+    </div>
+
+    <button type="submit" class="btn btn-primary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Enregistrer</button>
+</form>
+
+<a href="{% url 'offre_emploi_list' %}" class="btn btn-secondary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Retour à la liste</a>
+{% endblock %}

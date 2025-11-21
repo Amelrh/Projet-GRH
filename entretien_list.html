@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Entretiens{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Entretiens</h2>
+
+<div class="mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    {% for candidature in candidatures %}
+        <a href="{% url 'entretien_create' candidature_id=candidature.id %}" class="btn btn-primary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Ajouter un Entretien pour {{ candidature.offre.titre }}</a>
+    {% endfor %}
+</div>
+
+<table class="table table-striped" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+    <thead>
+        <tr>
+            <th style="color: white;">Candidature</th>
+            <th style="color: white;">Date</th>
+            <th style="color: white;">Heure</th>
+            <th style="color: white;">Lieu</th>
+            <th style="color: white;">Commentaires</th>
+            <th style="color: white;">Actions</th> 
+        </tr>
+    </thead>
+    <tbody>
+        {% for entretien in entretiens %}
+        <tr>
+            <td style="color: white;">{{ entretien.candidature.offre.titre }} - {{ entretien.candidature.candidat.username }}</td>
+            <td style="color: white;">{{ entretien.date_entretien }}</td>
+            <td style="color: white;">{{ entretien.heure_entretien }}</td>
+            <td style="color: white;">{{ entretien.lieu }}</td>
+            <td style="color: white;">{{ entretien.commentaires }}</td>
+            <td>
+                <a href="{% url 'entretien_update' entretien.pk %}" class="btn btn-warning btn-sm" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">Modifier</a>
+                <form action="{% url 'entretien_delete' entretien.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" style="color: white;">Aucun entretien planifié.</td>   
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'candidats_list' %}" class="btn btn-secondary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Retour à la liste des candidatures</a>
+
+{% endblock %}

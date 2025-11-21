@@ -1,0 +1,13 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Détails du Contrat</h2>
+
+<p><strong>Employé :</strong> {{ contrat.employe.user.username }}</p>
+<p><strong>Date de Début :</strong> {{ contrat.date_debut }}</p>
+<p><strong>Date de Fin :</strong> {{ contrat.date_fin }}</p>
+<p><strong>Type de Contrat :</strong> {{ contrat.type_contrat }}</p>
+
+<a href="{% url 'contrat_list' %}">Retour à la liste des contrats</a>
+{% endblock %}

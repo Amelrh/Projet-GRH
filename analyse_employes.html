@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Analyse des Employés{% endblock %}
+
+{% block content %}
+<h2 class="animated-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Analyse des Employés</h2>
+
+<h3>Nombre total d'employés : {{ employe_count }}</h3>
+
+<h4>Effectifs par type de contrat</h4>
+<ul>
+    {% for contrat in effectifs_par_contrat %}
+        <li>{{ contrat.type_contrat }} : {{ contrat.count }}</li>
+    {% endfor %}
+</ul>
+
+<h4>Statistiques de diversité</h4>
+<p>Nombre d'hommes : {{ sexe_count|dict_key:'Homme' }}</p>
+<p>Nombre de femmes : {{ sexe_count|dict_key:'Femme' }}</p>
+<p>Moins de 30 ans : {{ age_distribution.moins_de_30 }}</p>
+<p>Entre 30 et 50 ans : {{ age_distribution.entre_30_et_50 }}</p>
+<p>Plus de 50 ans : {{ age_distribution.plus_de_ 50 }}</p>
+
+<h4>Top Performeurs</h4>
+<ul>
+    {% for performeur in top_performeurs %}
+        <li>{{ performeur.employe.nom }} {{ performeur.employe.prenom }} - Score : {{ performeur.score }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

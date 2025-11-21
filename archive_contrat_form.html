@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier le Contrat Archivé{% endblock %}
+
+{% block content %}
+<h2>Modifier le Contrat Archivé</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    {% for field in form %}
+    <div class="mb-3">
+        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+        {{ field }}  
+        {% if field.errors %}
+            <div class="text-danger">
+                {{ field.errors }}
+            </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    
+    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+</form>
+
+<a href="{% url 'archive_contrat_list' %}" class="btn btn-secondary">Retour à la liste des contrats archivés</a>
+{% endblock %}

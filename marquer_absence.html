@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Marquer une Absence{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Marquer une Absence</h2>
+
+<form method="post" enctype="multipart/form-data"data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="id_employe" class="form-label">Employe</label>
+        {{ form.employe }}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_date_absence" class="form-label">Date d'Absence</label>
+        {{ form.date_absence }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="id_justification" class="form-label">Justification</label>
+        {{ form.justification }}
+    </div>
+    
+    <div class="mb-3">
+        <label for="id_justificatif" class="form-label">Justificatif</label>
+        {{ form.justificatif }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Enregistrer l'Absence</button>
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmer la Suppression{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Confirmer la Suppression</h2>
+<p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Êtes-vous sûr de vouloir supprimer l'entretien de {{ entretien.candidature.offre.titre }} ?</p>
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Supprimer</button>
+    <a href="{% url 'entretien_list' %}" class="btn btn-secondary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Annuler</a>
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter/Modifier une Prime{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">{% if form.instance.pk %}Modifier{% else %}Ajouter{% endif %} une Prime</h2>
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="{{ form.employe.id_for_label }}" class="form-label">{{ form.employe.label }}</label>
+        {{ form.employe }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.montant.id_for_label }}" class="form-label">{{ form.montant.label }}</label>
+        {{ form.montant }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date_attribution.id_for_label }}" class="form-label">{{ form.date_attribution.label }}</label>
+        {{ form.date_attribution }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+        {{ form.description }}
+    </div>
+
+    <button type="submit" class="btn btn-primary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Enregistrer</button>
+    <a href="{% url 'prime_list' %}" class="btn btn-secondary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Annuler</a>
+</form>
+{% endblock %}

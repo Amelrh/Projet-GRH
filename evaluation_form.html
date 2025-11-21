@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Formulaire d'Évaluation{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Formulaire d'Évaluation</h2>
+
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="{{ form.employe.id_for_label }}" class="form-label">{{ form.employe.label }}</label>
+        {{ form.employe }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date_evaluation.id_for_label }}" class="form-label">{{ form.date_evaluation.label }}</label>
+        {{ form.date_evaluation }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.objectifs_atteints.id_for_label }}" class="form-label">{{ form.objectifs_atteints.label }}</label>
+        {{ form.objectifs_atteints }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.competences_developpees.id_for_label }}" class="form-label">{{ form.competences_developpees.label }}</label>
+        {{ form.competences_developpees }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.note.id_for_label }}" class="form-label">{{ form.note.label }}</label>
+        {{ form.note }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.criteres.id_for_label }}" class="form-label">{{ form.criteres.label }}</label>
+        {{ form.criteres }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a href="{% url 'evaluation_list' %}" class="btn btn-secondary">Annuler</a>
+</form>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

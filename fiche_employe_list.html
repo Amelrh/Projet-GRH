@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Fiches d'Employés{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Fiches d'Employés</h2>
+
+<a href="{% url 'fiche_employe_create' %}" class="btn btn-primary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Ajouter une Fiche d'Employé</a>
+
+<table class="table table-striped" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+    <thead>
+        <tr>
+            <th style="color: white;">Code </th>
+            <th style="color: white;">Nom</th>
+            <th style="color: white;">Prénom</th>
+            <th style="color: white;">Date de Création</th>
+            <th style="color: white;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fiche in fiches %}
+        <tr>
+            <td style="color: white;">{{ fiche.employe.code }}</td>
+            <td style="color: white;">{{ fiche.employe.nom }}</td>
+            <td style="color: white;">{{ fiche.employe.prenom }}</td>
+            <td style="color: white;">{{ fiche.date_creation }}</td>
+            <td>
+                <a href="{% url 'fiche_employe_update' fiche.pk %}" class="btn btn-warning">Modifier</a>
+                <form action="{% url 'fiche_employe_delete' fiche.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" style="color: white;">Aucune fiche d'employé trouvée.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

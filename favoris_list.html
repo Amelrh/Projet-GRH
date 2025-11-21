@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mes Favoris{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Mes Favoris</h2>
+
+<!-- Section pour ajouter une fonctionnalité aux favoris -->
+<h3>Ajouter une Fonctionnalité aux Favoris</h3>
+<form id="add-favoris-form" method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="fonctionnalite-id">Choisissez une Fonctionnalité</label>
+        <select id="fonctionnalite-id" name="fonctionnalite_id" required>
+            <option value="">Sélectionnez une fonctionnalité</option>
+            <option value="1">Absences</option>
+            <option value="2">Retards</option>
+            <option value="3">Gestion des Employés</option>
+            <option value="4">Congés</option>
+            <option value="5">Type de Congé</option>
+            <option value="6">Soldes de Congé</option>
+            <option value="7">Contrats</option>
+            <option value="8">Salaires</option>
+            <option value="9">Recrutement</option>
+            <option value="10">Évaluations</option>
+            <option value="11">Fiches de Paie</option>
+            <option value="12">Primes</option>
+            <option value="13">Fiches Employés</option>
+            <option value="14">Services</option>
+            <option value="15">Types de Contrat</option>
+            <option value="15">Liste des Entretiens</option>
+            <option value="16">Liste des Candidats</option>
+            <option value="17">Archive de Contrats</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Ajouter aux Favoris</button>
+</form>
+
+<table class="table table-striped" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    <thead>
+        <tr>
+            <th>Fonctionnalité</th>
+            <th>Date d'ajout</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for favoris in favoris %}
+        <tr data-id="{{ favoris.fonctionnalite.id }}">
+            <td>{{ favoris.fonctionnalite.nom }}</td>
+            <td>{{ favoris.date_ajout }}</td>
+            <td>
+                <button class="btn btn-danger delete-favoris" data-id="{{ favoris.fonctionnalite.id }}">Retirer</button>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Aucun favori trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'home' %}" class="btn btn-secondary">Retour à l'Accueil</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Function to display a temporary notification
+    function showNotification(message, type) {
+        var notification = $('<div class="notification"></div>')
+            .addClass(type)
+            .text(message)
+            .hide()
+            .fadeIn(300);
+
+        $('body').append(notification);
+
+        // Automatically remove the notification after 3 seconds
+        setTimeout(function() {
+            notification.fadeOut(300, function() {
+                $(this).remove();
+            });
+        }, 3000);
+    }
+
+    // Gestion de l'ajout de favoris
+    $('#add-favoris-form').submit(function(event) {
+        event.preventDefault(); // Empêche le rechargement de la page
+        var fonctionnaliteId = $('#fonctionnalite-id').val();
+        
+        $.ajax({
+            url: "{% url 'favoris_add' 0 %}".replace('0', fonctionnaliteId), 
+            method: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}' 
+            },
+            success: function(response) {
+                showNotification(response.message, response.success ? 'success' : 'error');
+                if (response.success) {
+                    // Ajouter la nouvelle ligne au tableau
+                    var newRow = `<tr data-id="${fonctionnaliteId}">
+                        <td>${response.fonctionnalite_nom}</td>
+                        <td>${response.date_ajout}</td>
+                        <td>
+                            <button class="btn btn-danger delete-favoris" data-id="${fonctionnaliteId}">Retirer</button>
+                        </td>
+                    </tr>`;
+                    $('tbody').append(newRow);
+                }
+            },
+            error: function(xhr, status, error) {
+                showNotification("Une erreur s'est produite : " + error, 'error');
+            }
+        });
+    });
+
+    // Gestion de la suppression de favoris
+    $(document).on('click', '.delete-favoris', function() {
+        var fonctionnaliteId = $(this).data('id');
+            $.ajax({
+                url: "{% url 'favoris_remove' 0 %}".replace('0', fonctionnaliteId),  
+                method: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'  
+                },
+                success: function(response) {
+                    showNotification(response.message, response.success ? 'success' : 'error');
+                    if (response.success) {
+                        // Retirer la ligne du tableau
+                        $('tr[data-id="' + fonctionnaliteId + '"]').remove();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showNotification("Une erreur s'est produite : " + error, 'error');
+                }
+            });
+        
+    });
+});
+</script>
+
+<!-- Add some basic styles for notifications -->
+<style>
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px;
+    color: #fff;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.notification.success {
+    background-color: #28a745;
+}
+.notification.error {
+    background-color: #dc3545;
+}
+</style>
+
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Demander une Avance sur Salaire{% endblock %}
+
+{% block content %}
+<h2 class="animated-title" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Demander une Avance sur Salaire</h2>
+
+<div class="card">
+    <div class="card-body">
+        <form id="avance-salaire-form" method="POST" action="{% url 'avance_create' %}" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"> 
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="montant" class="form-label">Montant de l'avance</label>
+                <input type="number" class="form-control" id="montant" name="montant" required>
+            </div>
+            <div class="mb-3">
+                <label for="justification" class="form-label">Justification</label>
+                <textarea class="form-control" id="justification" name="justification" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Soumettre la demande</button>
+            <a href="{% url 'fiche_paie_list' %}" class="btn btn-secondary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Annuler</a>
+        </form>
+    </div>
+</div>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#avance-salaire-form').on('submit', function(event) {
+            event.preventDefault();  
+
+            $.ajax({
+                url: $(this).attr('action'),  
+                method: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        alert('Votre demande d\'avance sur salaire a été soumise avec succès !');
+                        window.location.href = "{% url 'fiche_paie_list' %}"; 
+                    } else {
+                        alert('Erreur: ' + JSON.stringify(response.errors));
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur:', error);
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

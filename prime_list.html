@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Primes{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Primes</h2>
+<a href="{% url 'prime_create' %}" class="btn btn-primary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Ajouter une Prime</a>
+<table class="table table-striped" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+    <thead>
+        <tr>
+            <th style="color: white;">Employé</th>
+            <th style="color: white;">Montant</th>
+            <th style="color: white;">Date d'attribution</th>
+            <th style="color: white;">Description</th>
+            <th style="color: white;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for prime in primes %}
+        <tr>
+            <td style="color: white;">{{ prime.employe }}</td>
+            <td style="color: white;">{{ prime.montant }}</td>
+            <td style="color: white;">{{ prime.date_attribution }}</td>
+            <td style="color: white;">{{ prime.description }}</td>
+            <td>
+                <a href="{% url 'prime_update' prime.pk %}" class="btn btn-warning" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">Modifier</a>
+                <form action="{% url 'prime_delete' prime.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="color: white;">Aucune prime trouvée.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

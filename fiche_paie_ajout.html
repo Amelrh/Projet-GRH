@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Fiches de Paie{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Fiches de Paie</h2>
+<a href="{% url 'avance_create' %}" class="btn btn-secondary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Demander une Avance</a>
+<a href="{% url 'fiche_paie_create' %}" class="btn btn-primary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Ajouter une Fiche de Paie</a>
+
+<table class="table" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <thead>
+        <tr>
+            <th>Employé</th>
+            <th>Date de Paiement</th>
+            <th>Salaire de Base</th>
+            <th>Salaire Final</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if fiches %}
+            {% for fiche in fiches %}
+            <tr id="fiche-{{ fiche.pk }}">
+                <td>{{ fiche.employe.username }}</td>
+                <td>{{ fiche.date_paiement }}</td>
+                <td>{{ fiche.salaire_base }}</td>
+                <td>{{ fiche.salaire_final }}</td>
+                <td>
+                    <a href="{% url 'fiche_paie_update' fiche.pk %}" class="btn btn-warning" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Modifier</a>
+                    <button class="btn btn-danger delete-fiche" data-id="{{ fiche.pk }}" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Supprimer</button>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5" class="text-center">Aucune fiche de paie disponible.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<!-- Modal de confirmation de suppression -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmer la Suppression</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cette fiche de paie ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Supprimer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        let ficheIdToDelete;
+
+        // Gestion de la suppression
+        $('.delete-fiche').on('click', function() {
+            ficheIdToDelete = $(this).data('id');
+            $('#confirmDeleteModal').modal('show');
+        });
+
+        $('#confirmDeleteButton').on('click', function() {
+            $.ajax({
+                url: "{% url 'fiche_paie_delete' '0' %}".replace('0', ficheIdToDelete),  
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'  
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                        $('#fiche-' + ficheIdToDelete).remove();  
+                    } else {
+                        alert("Erreur: " + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("Une erreur s'est produite lors de la suppression de la fiche de paie.");
+                }
+            });
+            $('#confirmDeleteModal').modal('hide');  
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Détails de l'Archive de Contrat{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200" class="text-center">Détails de l'Archive de Contrat</h2>
+
+<div class="mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200" class="text-center">
+    <label for="contrat" class="form-label"><strong>Contrat :</strong></label>
+    <p id="contrat">{{ archive.contrat }}</p>
+</div>
+
+<div class="mb-3"data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200" class="text-center">
+    <label for="date_archivage" class="form-label"><strong>Date d'Archivage :</strong></label>
+    <p id="date_archivage">{{ archive.date_archivage }}</p>
+</div>
+
+<a href="{% url 'archive_contrat_list' %}" class="btn btn-secondary">Retour à la Liste des Archives</a>
+{% endblock %}

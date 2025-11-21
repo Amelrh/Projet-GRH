@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Retards{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Liste des Retards</h2>
+<a href="{% url 'marquer_retard' %}" class="btn btn-primary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400" >Marquer un Retard</a>
+
+<table class="table" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    <thead>
+        <tr>
+            <th>Employé</th>
+            <th>Date de Retard</th>
+            <th>Heures de Retard</th>
+            <th>Justification</th>
+            <th>Justificatif</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for retard in retards %}
+        <tr>
+            <td>{{ retard.employe.nom }}</td>
+            <td>{{ retard.date_retard }}</td>
+            <td>{{ retard.heures_retard }}</td>
+            <td>{{ retard.justification }}</td>
+            <td>
+                {% if retard.justificatif %}
+                    <a href="{{ retard.justificatif.url }}" target="_blank">Voir le justificatif</a>
+                {% else %}
+                    Aucun justificatif
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Aucun retard trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'dashboard' %}" class="btn btn-secondary">Retour au Tableau de Bord</a>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier un Congé{% endblock %}
+
+{% block content %}
+<h2>Modifier un Congé</h2>
+<form id="conge-form" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="id" id="conge-id" value="{{ form.instance.pk }}">
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+</form>
+<a href="{% url 'conge_list' %}" class="btn btn-secondary">Retour à la liste des congés</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#conge-form').on('submit', function(event) {
+            event.preventDefault();  
+            let id = $('#conge-id').val();
+            $.ajax({
+                url: "{% url 'ajax_update_conge' 'conge.id' %}".replace('conge.id', id),
+                method: "POST",
+                data: $(this ).serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        alert('Congé mis à jour avec succès !');
+                        window.location.href = "{% url 'conge_list' %}";
+                    } else {
+                        alert('Erreur: ' + response.errors);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur:', error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

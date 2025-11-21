@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Fiches de Paie{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Fiches de Paie</h2>
+
+<a href="{% url 'fiche_paie_create' %}" class="btn btn-primary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Ajouter une Fiche de Paie</a>
+
+<a href="{% url 'demander_avance' %}" class="btn btn-secondary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">Demander une Avance sur Salaire</a>
+
+<table class="table table-striped" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+    <thead>
+        <tr>
+            <th style="color: white;">Employé</th>
+            <th style="color: white;">Date de Paiement</th>
+            <th style="color: white;">Salaire Final</th>
+            <th style="color: white;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if fiches %}
+            {% for fiche in fiches %}
+            <tr>
+                <td style="color: white;">{{ fiche.employe.user.username }}</td>
+                <td style="color: white;">{{ fiche.date_paiement }}</td>
+                <td style="color: white;">{{ fiche.salaire_final }}</td>
+                <td>
+                    <a href="{% url 'fiche_paie_detail' fiche.pk %}" class="btn btn-info">Détails</a>
+                    <form action="{% url 'fiche_paie_update' fiche.pk %}" method="get" style="display:inline;">
+                        <button type="submit" class="btn btn-warning">Modifier</button>
+                    </form>
+                    <form action="{% url 'fiche_paie_delete' fiche.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4" style="color: white;">Aucune fiche de paie trouvée.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}

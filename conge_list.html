@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Congés{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Congés</h2>
+
+<a href="{% url 'conge_create' %}" class="btn btn-primary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Demander un Congé</a>
+
+<table class="table" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <thead>
+        <tr>
+            <th>Employé</th>
+            <th>Type de Congé</th>
+            <th>Date de Début</th>
+            <th>Date de Fin</th>
+            <th>Jours Utilisés</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="conge-list">
+        {% for conge in conges %}
+        <tr data-id="{{ conge.id }}">
+            <td>{{ conge.employe.username }}</td>
+            <td>{{ conge.type_conge }}</td>
+            <td>{{ conge.date_debut }}</td>
+            <td>{{ conge.date_fin }}</td>
+            <td>{{ conge.jours_utilises }}</td>
+            <td>
+                <a href="{% url 'conge_update' conge.id %}" class="btn btn-warning" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Modifier</a>
+                <form action="{% url 'conge_delete' conge.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Aucun congé trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

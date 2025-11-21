@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmer la Suppression{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Confirmer la suppression de l'événement</h2>
+    <form method="POST" class="mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+        {% csrf_token %}
+        <p>Êtes-vous sûr de vouloir supprimer l'événement "{{ event.title }}" ? Cette action est irréversible.</p>
+        <input type="submit" value="Oui, supprimer" class="btn btn-danger">
+        <a href="{% url 'event_list' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+{% endblock %}

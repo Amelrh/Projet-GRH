@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Offres d'Emploi{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Offres d'Emploi</h2>
+<a href="{% url 'offre_emploi_create' %}" class="btn btn-primary" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Ajouter une Offre</a>
+<table class="table" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Date de Publication</th>
+            <th>Date d'Expiration</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for offre in offres %}
+        <tr>
+            <td>{{ offre.titre }}</td>
+            <td>{{ offre.description|truncatewords:10 }}</td>
+            <td>{{ offre.date_publication }}</td>
+            <td>{{ offre.date_expiration }}</td>
+            <td>{{ offre.statut }}</td>
+            <td>
+                <div class="d-flex flex-column">
+                    <a href="{% url 'offre_emploi_update' offre.pk %}" class="btn btn-warning mb-2">Modifier</a>
+                    <a href="{% url 'offre_emploi_delete' offre.pk %}" class="btn btn-danger mb-2">Supprimer</a>
+                    <a href="{% url 'candidature_create' offre.pk %}" class="btn btn-primary">Postuler</a> 
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

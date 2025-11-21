@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Formulaire de Congé{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Formulaire de Congé</h2>
+
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="{{ form.employe.id_for_label }}" class="form-label">{{ form.employe.label }}</label>
+        {{ form.employe }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.type_conge.id_for_label }}" class="form-label">{{ form.type_conge.label }}</label>
+        {{ form.type_conge }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date_debut.id_for_label }}" class="form-label">{{ form.date_debut.label }}</label>
+        {{ form.date_debut }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.date_fin.id_for_label }}" class="form-label">{{ form.date_fin.label }}</label>
+        {{ form.date_fin }}
+    </div>
+
+
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+    <a href="{% url 'conge_list' %}" class="btn btn-secondary">Annuler</a>
+</form>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmation de Suppression{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Êtes-vous sûr de vouloir supprimer cette Offre d'Emploi ?</h2>
+<p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"><strong>Titre :</strong> {{ offre.titre }}</p>
+<form method="post" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Confirmer la Suppression</button>
+    <a href="{% url 'offre_emploi_list' %}" class="btn btn-secondary"data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Annuler</a>
+</form>
+{% endblock %}

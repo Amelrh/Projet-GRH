@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Merci de nous avoir contactés{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-purple">Merci de nous avoir contactés !</h1>
+    <p>Votre message a été envoyé avec succès.</p>
+    <p>Nous vous répondrons dès que possible.</p>
+    <p>Pour toute question urgente, vous pouvez également nous contacter par email à : <a href="mailto:gestiorh.isila.2025@gmail.com">gestiorh.isila.2025@gmail.com</a></p>
+    <a href="{% url 'contact' %}" class="btn btn-primary">Retourner au formulaire</a>
+</div>
+{% endblock %}

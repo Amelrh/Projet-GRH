@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmer la Suppression{% endblock %}
+
+{% block content %}
+<h2>Confirmer la Suppression</h2>
+<p>Êtes-vous sûr de vouloir supprimer l'archive de contrat suivante ?</p>
+
+<p><strong>Contrat :</strong> {{ archive.contrat }}</p>
+<p><strong>Date d'Archivage :</strong> {{ archive.date_archivage }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Supprimer</button>
+    <a href="{% url 'archive_contrat_list' %}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}

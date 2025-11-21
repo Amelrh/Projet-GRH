@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Contrats{% endblock %}
+
+{% block content %}
+<h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Liste des Contrats</h2>
+
+<a href="{% url 'contrat_create' %}" class="btn btn-primary mb-3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Ajouter un Contrat</a>
+
+<div class="table-responsive">
+    <table class="table table-striped" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        <thead>
+            <tr>
+                <th class="text-white">Employé</th>
+                <th class="text-white">Date de Début</th>
+                <th class="text-white">Date de Fin</th>
+                <th class="text-white">Type de Contrat</th>
+                <th class="text-white">Actions</th>  
+            </tr>
+        </thead>
+        <tbody id="contrat-table-body">
+            {% for contrat in contrats %}
+            <tr id="contrat-{{ contrat.id }}">
+                <td class="text-white">{{ contrat.employe.user.prenom }} {{ contrat.employe.user.nom }} ({{ contrat.employe.code }})</td>
+                <td class="text-white">{{ contrat.date_debut|date:"d/m/Y" }}</td>
+                <td class="text-white">{{ contrat.date_fin|date:"d/m/Y" }}</td>
+                <td class="text-white">{{ contrat.type_contrat }}</td>
+                <td>
+                    <a href="{% url 'contrat_update' contrat.id %}" class="btn btn-warning">Modifier</a>
+                    <form action="{% url 'contrat_delete' contrat.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                    <form action="{% url 'contrat_archive' contrat.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-info">Archiver</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-white">Aucun contrat trouvé.</td>  
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'archive_contrat_list' %}" class="btn btn-secondary mt-3">Voir les Contrats Archivés</a>
+
+{% endblock %}
